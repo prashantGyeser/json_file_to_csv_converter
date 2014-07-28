@@ -7,7 +7,7 @@ output_csv_path = 'output.csv'
 
 invalid_json_count = 1
 
-json_file = File.open(json_file_path).read
+#json_file = File.open(json_file_path).read
 
 
 def convert_required_fields_from_json_to_hash(json_line)
@@ -52,8 +52,9 @@ def json_valid?(json_line)
   end
 end
 
+json_file = File.open(json_file_path)
 
-json_file.each_line do |line|
+while(line = json_file.gets)
   if json_valid?(line)
     data_hash = convert_required_fields_from_json_to_hash(line)
     CSV.open(output_csv_path, 'a+') do |csv|
@@ -69,3 +70,9 @@ json_file.each_line do |line|
     invalid_json_count = invalid_json_count + 1
   end
 end
+
+
+#json_file.each_line do |line|
+#File.readlines(json_file_path).each do |line|
+
+#end
