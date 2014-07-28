@@ -1,7 +1,7 @@
 require 'json'
 require 'csv'
 
-json_file_path = 'curl_output.json'
+json_file_path = '../gnip_sample_output/local_test.json'
 output_csv_path = 'output.csv'
 
 
@@ -19,14 +19,26 @@ def convert_required_fields_from_json_to_hash(json_line)
     data[:user_image_url] = json_hash["actor"]["image"]
     data[:tweet_body] = json_hash["body"]
     data[:matching_rule] = json_hash["gnip"]["matching_rules"][0]["value"]
+    if json_hash["actor"]["location"].nil?
+      data[:twitter_location] = ' '
+    else
+      data[:twitter_location] = json_hash["actor"]["location"]["displayName"]
+    end
+    if json_hash["gnip"]["profileLocations"].nil?
+      data[:gnip_location] = ' '
+    else
+      data[:gnip_location] = json_hash["gnip"]["profileLocations"][0]["address"]["locality"]
+    end
 
     return data
-  rescue
+  rescue Exception => e
     puts "Opps! Something went wrong!"
-    puts "The tweet is:"
-    puts '###########################################################################'
-    puts json_line
-    puts '###########################################################################'
+    #puts '###########################################################################'
+    #puts data
+    #puts '###########################################################################'
+    puts '==============================================================='
+    puts e
+    puts '==============================================================='
   end
 
 end
@@ -45,7 +57,12 @@ json_file.each_line do |line|
   if json_valid?(line)
     data_hash = convert_required_fields_from_json_to_hash(line)
     CSV.open(output_csv_path, 'a+') do |csv|
-      csv << [data_hash[:screen_name], data_hash[:user_image_url], data_hash[:tweet_body], data_hash[:matching_rule]]
+
+      if data_hash.nil?
+      else
+        csv << [data_hash[:screen_name], data_hash[:user_image_url], data_hash[:tweet_body], data_hash[:matching_rule], data_hash[:twitter_location], data_hash[:gnip_location], data_hash[:gnip_location]]
+      end
+
     end
   else
     puts "Error in json object: #{invalid_json_count}"
