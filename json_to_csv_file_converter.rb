@@ -76,3 +76,5 @@ end
 #File.readlines(json_file_path).each do |line|
 
 #end
+
+puts "The final invalid unparsable json count is: #{invalid_json_count}"
