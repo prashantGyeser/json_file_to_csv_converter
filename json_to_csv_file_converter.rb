@@ -62,7 +62,7 @@ while(line = json_file.gets)
 
       if data_hash.nil?
       else
-        csv << [data_hash[:screen_name], data_hash[:user_image_url], data_hash[:tweet_body], data_hash[:matching_rule], data_hash[:twitter_location], data_hash[:gnip_location], data_hash[:gnip_location]]
+        csv << [data_hash[:screen_name], data_hash[:user_image_url], data_hash[:tweet_body], data_hash[:matching_rule], data_hash[:twitter_location], data_hash[:gnip_location]]
       end
 
     end
