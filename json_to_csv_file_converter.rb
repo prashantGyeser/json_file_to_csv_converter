@@ -6,7 +6,7 @@ output_csv_path = 'output.csv'
 
 
 invalid_json_count = 1
-
+parse_error_count = 1
 #json_file = File.open(json_file_path).read
 
 
@@ -39,6 +39,7 @@ def convert_required_fields_from_json_to_hash(json_line)
     puts '==============================================================='
     puts e
     puts '==============================================================='
+    parse_error_count = parse_error_count + 1
   end
 
 end
@@ -78,3 +79,4 @@ end
 #end
 
 puts "The final invalid unparsable json count is: #{invalid_json_count}"
+puts "The final parse error count is: #{parse_error_count}"
