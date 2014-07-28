@@ -15,7 +15,7 @@ def convert_required_fields_from_json_to_hash(json_line)
 
   begin
     json_hash = JSON.parse(json_line)
-    data[:screen_name] = json_hash["actor"]["displayName"]
+    data[:screen_name] = json_hash["actor"]["preferredUsername"]
     data[:user_image_url] = json_hash["actor"]["image"]
     data[:tweet_body] = json_hash["body"]
     data[:matching_rule] = json_hash["gnip"]["matching_rules"][0]["value"]
